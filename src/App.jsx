@@ -4,15 +4,17 @@ import { auth } from "./firebase";
 import ChatRoom from "./components/ChatRoom";
 import Navbar from "./components/Navbar";
 
-export default function App() {
+function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
     });
-    return () => unsub();
+
+    return () => unsubscribe();
   }, []);
+
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
